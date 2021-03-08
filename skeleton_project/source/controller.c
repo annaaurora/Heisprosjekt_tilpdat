@@ -197,6 +197,9 @@ void controller_at_floor(){
 
 	do {
 		start_time = (clock() * 1000)/CLOCKS_PER_SEC;
+
+		elevator_update_orders();
+
 		if(hardware_read_obstruction_signal()){
 			end_time = start_time + 3000;
 		}
