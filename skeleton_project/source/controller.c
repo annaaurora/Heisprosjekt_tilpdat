@@ -179,8 +179,11 @@ void controller_at_floor(){
 
 	/*nullstille ordre*/
 	up_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_UP, 0);
 	cab_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_INSIDE, 0);
 	down_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_DOWN, 0);
 
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
