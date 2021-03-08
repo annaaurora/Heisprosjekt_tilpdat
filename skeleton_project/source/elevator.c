@@ -28,8 +28,8 @@ void elevator_clear_all_order_lights(void){
 bool elevator_check_if_at_floor(void){
 		for(int j = 0; j < HARDWARE_NUMBER_OF_FLOORS; j++){
 			if(hardware_read_floor_sensor(j)){
-			current_floor = j;
-			return true;
+				current_floor = j;
+				return true;
 			}
 		}
 		return false;
@@ -42,17 +42,17 @@ bool elevator_check_if_at_floor(void){
 /*skrur på ordre-lys*/
 void elevator_update_orders(void){ 
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
-		for(int HardwareMovement = HARDWARE_ORDER_UP; HardwareMovement <= HARDWARE_ORDER_DOWN; ++HardwareMovement){
-			if(hardware_read_order(i, HardwareMovement)){
-				if(HardwareMovement == HARDWARE_ORDER_UP){
+		for(int HardwareOrder = HARDWARE_ORDER_UP; HardwareOrder <= HARDWARE_ORDER_DOWN; ++HardwareOrder){
+			if(hardware_read_order(i, HardwareOrder)){
+				if(HardwareOrder == HARDWARE_ORDER_UP){
 					up_orders[i] = 1;
 					hardware_command_order_light(i, HARDWARE_ORDER_UP, 1);
 				}
-				else if(HardwareMovement == HARDWARE_ORDER_INSIDE){
+				else if(HardwareOrder == HARDWARE_ORDER_INSIDE){
 					cab_orders[i] = 1;
 					hardware_command_order_light(i, HARDWARE_ORDER_INSIDE, 1);
 				}
-				else if(HardwareMovement == HARDWARE_ORDER_DOWN){
+				else if(HardwareOrder == HARDWARE_ORDER_DOWN){
 					down_orders[i] = 1;
 					hardware_command_order_light(i, HARDWARE_ORDER_DOWN, 1);
 				}
@@ -76,16 +76,15 @@ bool elevator_check_for_orders(int order_type[]){
 
 
 
-
 bool elevator_orders_exist(void){
-	return (elevator_check_for_orders(up_orders) | elevator_check_for_orders(cab_orders) | elevator_check_for_orders(down_orders));
+	return (elevator_check_for_orders(up_orders) || elevator_check_for_orders(cab_orders) || elevator_check_for_orders(down_orders));
 }
 
 
 
 int elevator_floor_with_order(){
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
-		if((up_orders[i] = 1) | (cab_orders[i] = 1) | (down_orders[i] = 1)){
+		if((up_orders[i] == 1) || (cab_orders[i] == 1) || (down_orders[i] == 1)){
 			return i;
 		}
 	}
@@ -93,6 +92,8 @@ int elevator_floor_with_order(){
 }
 
 
+
+/*
 int elevator_closest_floor_with_order(){
 	int closest_order_above;
 	for(int i = current_floor + 1; i < HARDWARE_NUMBER_OF_FLOORS; i++){
@@ -129,6 +130,7 @@ int elevator_closest_floor_with_order(){
 
 	return closest_order;
 }
+*/
 
 
 

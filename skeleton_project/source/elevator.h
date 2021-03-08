@@ -19,9 +19,9 @@ typedef enum {
 
 elevator_direction direction; 
 
-int up_orders[4];
-int cab_orders[4];
-int down_orders[4];
+int up_orders[HARDWARE_NUMBER_OF_FLOORS];
+int cab_orders[HARDWARE_NUMBER_OF_FLOORS];
+int down_orders[HARDWARE_NUMBER_OF_FLOORS];
 
 
 
