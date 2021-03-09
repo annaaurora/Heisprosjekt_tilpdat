@@ -4,6 +4,7 @@
 /*for å starte heisen. Trenger oppdatere ordre da det skjer så fort*/
 void controller_initialize(void){
 
+	printf("stopper den her");
 	int error = hardware_init();
     if(error != 0){
         fprintf(stderr, "Unable to initialize hardware\n");
@@ -18,9 +19,13 @@ void controller_initialize(void){
 		down_orders[i] = 0;
 	}
 
+	printf("HEI");
+
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	direction = up;
 	
+	printf("HALLo");
+
 	bool at_floor = false;
 	while(!at_floor){
 		at_floor = elevator_check_if_at_floor();
@@ -28,7 +33,11 @@ void controller_initialize(void){
 
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
+	printf("halla");
+
 	current_state = waiting_state;
+
+	printf("kom deg hit!!");
 
 }
 
@@ -220,7 +229,8 @@ void controller_at_floor(){
 				orders_above = true;
 			}
 		}
-
+		
+		/*sjekke om ordre over eller under den retningen heisen går i*/
 		if(direction == up && orders_above == true){
 			current_state = move_up_state;
 			break;
@@ -230,7 +240,8 @@ void controller_at_floor(){
 			current_state = move_down_state;
 			break;
 		}
-
+		
+		/*endre retning*/
 		else{
 			if(direction == up){
 				current_state = move_down_state;
@@ -247,9 +258,6 @@ void controller_at_floor(){
 		current_state = waiting_state;
 	}
 }
-
-
-
 
 
 void controller_stop_button(){
