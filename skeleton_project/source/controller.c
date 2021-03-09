@@ -3,15 +3,17 @@
 
 /*for å starte heisen. Trenger oppdatere ordre da det skjer så fort*/
 void controller_initialize(void){
-
+	/*initialiserer hardware*/
 	int error = hardware_init();
     if(error != 0){
         fprintf(stderr, "Unable to initialize hardware\n");
         exit(1);
     }
 
+	/*nullstille ordre-lys*/
 	elevator_clear_all_order_lights();
 
+	/*nullstille ordre-arrays*/
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 		up_orders[i] = 0;
 		cab_orders[i] = 0;
