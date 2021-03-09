@@ -265,7 +265,16 @@ void controller_stop_button(){
 	while(hardware_read_stop_signal()){	
 		hardware_command_stop_light(1);
 	}
-	current_state = init_state;
+	hardware_command_stop_light(0);
+
+	elevator_clear_all_order_lights();
+
+	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
+		up_orders[i] = 0;
+		cab_orders[i] = 0;
+		down_orders[i] = 0;
+	}
+	current_state = waiting_state;
 }
 
 
