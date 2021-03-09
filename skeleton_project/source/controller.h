@@ -3,6 +3,8 @@
 
 #include "elevator.h"
 
+bool between_floors;
+
 typedef enum {
 	init_state,
 	waiting_state,

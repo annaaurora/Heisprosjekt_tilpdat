@@ -4,7 +4,6 @@
 /*for å starte heisen. Trenger oppdatere ordre da det skjer så fort*/
 void controller_initialize(void){
 
-	printf("stopper den her");
 	int error = hardware_init();
     if(error != 0){
         fprintf(stderr, "Unable to initialize hardware\n");
@@ -19,25 +18,20 @@ void controller_initialize(void){
 		down_orders[i] = 0;
 	}
 
-	printf("HEI");
-
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	direction = up;
-	
-	printf("HALLo");
 
 	bool at_floor = false;
 	while(!at_floor){
 		at_floor = elevator_check_if_at_floor();
 	}
 
-	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+	between_floors = false;
 
-	printf("halla");
+	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
 	current_state = waiting_state;
 
-	printf("kom deg hit!!");
 
 }
 
@@ -57,8 +51,6 @@ void controller_decide_up_or_down(){
 
 	if(elevator_orders_exist()){
 		int next_floor = elevator_floor_with_order();
-		printf("%d", next_floor);
-		
 
 		if((next_floor - current_floor) > 0){
 			current_state = move_up_state;
@@ -69,7 +61,18 @@ void controller_decide_up_or_down(){
 		}
 
 		else {
-			current_state = at_floor_state;
+			if(between_floors == false){
+				current_state = at_floor_state;
+			}
+			else{
+				printf("%d", direction);
+				if(direction == up){
+					current_state = move_down_state;
+				}
+				else{
+					current_state = move_up_state;
+				}
+			}
 		}
 	}
 }
@@ -88,8 +91,6 @@ void controller_moving_up(){
 			up_or_cab_orders_above = true;
 		}
 	}
-
-	printf("%d", up_or_cab_orders_above);
 	
 	while(elevator_orders_exist()){
 
@@ -102,8 +103,8 @@ void controller_moving_up(){
 			for(int i = current_floor; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 				if(hardware_read_floor_sensor(i)){
 					hardware_command_floor_indicator_on(i);
+					current_floor = i;
 					if((up_orders[i] == 1) || (cab_orders[i] == 1)){
-						current_floor = i;
 						current_state = at_floor_state;
 						break;
 					}
@@ -115,8 +116,8 @@ void controller_moving_up(){
 			for(int n = current_floor; n < HARDWARE_NUMBER_OF_FLOORS; n++){
 				if(hardware_read_floor_sensor(n)){
 					hardware_command_floor_indicator_on(n);
+					current_floor = n;
 					if((down_orders[n] == 1)){
-						current_floor = n;
 						current_state = at_floor_state;
 						break;
 					}
@@ -134,9 +135,6 @@ void controller_moving_down(){
 	hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 	direction = down;
 
-	printf("current floor: %d", current_floor);	
-
-	/*riktig for cab orders, men ikke for down...*/
 
 	bool down_or_cab_orders_below = false;
 	for(int j = 0; j <= current_floor; j++){
@@ -145,7 +143,6 @@ void controller_moving_down(){
 		}
 	}
 
-	printf("%d", down_or_cab_orders_below);
 
 	while(elevator_orders_exist()){
 
@@ -158,8 +155,8 @@ void controller_moving_down(){
 			for(int i = current_floor; i >= 0; i--){
 				if(hardware_read_floor_sensor(i)){
 					hardware_command_floor_indicator_on(i);
+					current_floor = i;
 					if((down_orders[i] == 1) || (cab_orders[i] == 1)){
-						current_floor = i;
 						current_state = at_floor_state;
 						break;
 					}
@@ -171,8 +168,8 @@ void controller_moving_down(){
 			for(int n = current_floor; n >= 0; n--){
 				if(hardware_read_floor_sensor(n)){
 					hardware_command_floor_indicator_on(n);
+					current_floor = n;
 					if((up_orders[n] == 1)){
-						current_floor = n;
 						current_state = at_floor_state;
 						break;
 					}
@@ -262,10 +259,28 @@ void controller_at_floor(){
 
 void controller_stop_button(){
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+
 	while(hardware_read_stop_signal()){	
 		hardware_command_stop_light(1);
+		hardware_command_door_open(1);
 	}
 	hardware_command_stop_light(0);
+
+	int start_time = (clock() * 1000)/CLOCKS_PER_SEC;
+	int end_time = start_time + 3000;
+
+	if(elevator_check_if_at_floor()){
+		hardware_command_door_open(1);
+		do{
+			start_time = (clock() * 1000)/CLOCKS_PER_SEC;
+		} while(start_time <= end_time);
+	}
+
+	else{
+		between_floors = true;
+	}
+
+	hardware_command_door_open(0);
 
 	elevator_clear_all_order_lights();
 
@@ -274,6 +289,7 @@ void controller_stop_button(){
 		cab_orders[i] = 0;
 		down_orders[i] = 0;
 	}
+
 	current_state = waiting_state;
 }
 
@@ -297,7 +313,7 @@ void controller_state_machine(){
 			
 
 			case move_up_state :
-				printf("entering move_up_state\n");
+				/*printf("entering move_up_state\n");*/
 				controller_moving_up();
 				break;
 			

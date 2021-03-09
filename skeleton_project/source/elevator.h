@@ -9,7 +9,6 @@
 #include "time.h"
 
 int current_floor;
-int next_floor;
 
 typedef enum {
 	up,
