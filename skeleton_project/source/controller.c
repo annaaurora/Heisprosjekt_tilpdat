@@ -214,19 +214,19 @@ void controller_at_floor(){
 
 	while(elevator_orders_exist() && stop_elevator == false){
 		
-		bool up_or_cab_orders_above = false;
+		bool orders_above = false;
 		for(int j = current_floor; j < HARDWARE_NUMBER_OF_FLOORS; j++){
-			if(up_orders[j] == 1 || cab_orders[j] == 1){
-				up_or_cab_orders_above = true;
+			if(up_orders[j] == 1 || cab_orders[j] == 1 || down_orders[j] == 1){
+				orders_above = true;
 			}
 		}
 
-		if(direction == up && up_or_cab_orders_above == true){
+		if(direction == up && orders_above == true){
 			current_state = move_up_state;
 			break;
 		}
 
-		else if(direction == down && up_or_cab_orders_above == false){
+		else if(direction == down && orders_above == false){
 			current_state = move_down_state;
 			break;
 		}
