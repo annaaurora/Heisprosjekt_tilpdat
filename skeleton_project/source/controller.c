@@ -1,7 +1,7 @@
 #include "elevator.h"
 #include "controller.h"
 
-/*for å starte heisen. Trenger oppdatere ordre da det skjer så fort*/
+/*Initialiserer hardwre og heis. Trenger ikke oppdatere ordre da det skjer så fort*/
 void controller_initialize(void){
 	/*initialiserer hardware*/
 	int error = hardware_init();
@@ -20,14 +20,16 @@ void controller_initialize(void){
 		down_orders[i] = 0;
 	}
 
+	/*setter retning oppover og stopper i første etasje den møter*/
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	direction = up;
 
 	bool at_floor = false;
 	while(!at_floor){
-		at_floor = elevator_check_if_at_floor();
+		at_floor = elevator_check_if_at_floor(); /*oppdaterer current_floor*/
 	}
 
+	/*between_floor usann etter while over*/
 	between_floors = false;
 
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
@@ -37,12 +39,12 @@ void controller_initialize(void){
 
 }
 
-/*init funker som den skal*/
 
 
-/*for bestemme heisen retning*/
+/*Bestemme heisens retning*/
 void controller_decide_up_or_down(){
-
+	
+	/*ingen ordre -> sjekke stopp-knapp, vente på ordre*/
 	while(!elevator_orders_exist()){
 		if(hardware_read_stop_signal()){
 			current_state = stop_programme;
@@ -50,7 +52,8 @@ void controller_decide_up_or_down(){
 		}
 	}
 	
-
+	/*når en ordre kalt -> sjekke om ordren er over eller under for å bestemme retning*/
+	/*elevator_orders_exist oppdaterer ordre og returnerer true dersom det finnes ordre*/
 	if(elevator_orders_exist()){
 		int next_floor = elevator_floor_with_order();
 
@@ -62,12 +65,12 @@ void controller_decide_up_or_down(){
 			current_state = move_down_state;
 		}
 
+		/*hvis ordren er i current_floor, må det sjekkses om heisen kan være mellom to etasjer*/
 		else {
 			if(between_floors == false){
 				current_state = at_floor_state;
 			}
 			else{
-				printf("%d", direction);
 				if(direction == up){
 					current_state = move_down_state;
 				}
@@ -79,14 +82,14 @@ void controller_decide_up_or_down(){
 	}
 }
 
-/*sette retning oppover. Velge ordre, videre til at_floor_state*/
+/*Retning = oppover. Velge ordre, videre til at_floor_state*/
 void controller_moving_up(){
 
+	/*setter retning opp og oppdaterer direction*/
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	direction = up;
 
-	/*current floor har riktig verdi*/
-	
+	/*up_or_cab_orders har førsteprioritet, sjekker derfor om disse finnes over heisen*/
 	bool up_or_cab_orders_above = false;
 	for(int j = current_floor; j < HARDWARE_NUMBER_OF_FLOORS; j++){
 		if(up_orders[j] == 1 || cab_orders[j] == 1){
@@ -94,13 +97,17 @@ void controller_moving_up(){
 		}
 	}
 	
+	/*elevator_orders_exist oppdaterer ordre og returnerer true dersom det finnes ordre*/
 	while(elevator_orders_exist()){
 
+		/*sjekker stop-knapp*/
 		if(hardware_read_stop_signal()){
 			current_state = stop_programme;
 			break;
 		}
 
+		/*hvis up_or_can_orders_above = true*/
+		/*at_floor_state når heisen kommer til en etg med ordre*/
 		if(up_or_cab_orders_above){
 			for(int i = current_floor; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 				if(hardware_read_floor_sensor(i)){
@@ -114,6 +121,9 @@ void controller_moving_up(){
 			}
 			break;
 		}
+
+		/*hvis up_or_can_orders_above = false*/
+		/*at_floor_state når heisen kommer til en etg med ordre*/
 		else{
 			for(int n = current_floor; n < HARDWARE_NUMBER_OF_FLOORS; n++){
 				if(hardware_read_floor_sensor(n)){
@@ -131,13 +141,14 @@ void controller_moving_up(){
 	}
 }
 
-/*sette retning nedover. Velge ordre, videre til at_floor_state*/
+/*Retning = nedover. Velge ordre, videre til at_floor_state*/
 void controller_moving_down(){
 
+	/*Sette retning ned opp oppdatere direction*/
 	hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 	direction = down;
 
-
+	/*down_or_cab_orders har førsteprioritet, sjekker derfor om disse finnes under heisen*/
 	bool down_or_cab_orders_below = false;
 	for(int j = 0; j <= current_floor; j++){
 		if(down_orders[j] == 1 || cab_orders[j] == 1){
@@ -145,14 +156,17 @@ void controller_moving_down(){
 		}
 	}
 
-
+	 /*elevator_orders_exist oppdaterer ordre og returnerer true dersom det finnes ordre*/
 	while(elevator_orders_exist()){
 
+		/*sjekker stopp-knapp*/
 		if(hardware_read_stop_signal()){
 			current_state = stop_programme;
 			break;
 		}
 
+		/*hvis down_or_can_orders_above = true*/
+		/*at_floor_state når heisen kommer til en etg med ordre*/
 		if(down_or_cab_orders_below){
 			for(int i = current_floor; i >= 0; i--){
 				if(hardware_read_floor_sensor(i)){
@@ -166,6 +180,9 @@ void controller_moving_down(){
 			}
 			break;
 		}
+
+		/*hvis down_or_can_orders_above = false*/
+		/*at_floor_state når heisen kommer til en etg med ordre*/
 		else{
 			for(int n = current_floor; n >= 0; n--){
 				if(hardware_read_floor_sensor(n)){
@@ -185,7 +202,7 @@ void controller_moving_down(){
 
 void controller_at_floor(){
 
-	/*nullstille ordre*/
+	/*nullstille alle ordre og ordre-lys på current_floor*/
 	up_orders[current_floor] = 0;
 	hardware_command_order_light(current_floor, HARDWARE_ORDER_UP, 0);
 	cab_orders[current_floor] = 0;
@@ -193,16 +210,21 @@ void controller_at_floor(){
 	down_orders[current_floor] = 0;
 	hardware_command_order_light(current_floor, HARDWARE_ORDER_DOWN, 0);
 
+	/*stoppe heisen*/
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
+	/*åpne døren*/
 	hardware_command_door_open(1);
 
+	/*timer : definere start- og sluttid*/
 	int start_time = (clock() * 1000)/CLOCKS_PER_SEC;
 
 	int end_time = start_time + 3000;
 
 	bool stop_elevator = false;
 
+	/*mens timeren teller ned oppdateres ordrene, og obstruction- og stoppknapp sjekkes*/
+	/*obstruction nullstiller timeren*/
 	do {
 		start_time = (clock() * 1000)/CLOCKS_PER_SEC;
 
@@ -218,18 +240,22 @@ void controller_at_floor(){
 		}
 	} while(start_time <= end_time);
 
+	/*lukke døren*/
 	hardware_command_door_open(0);
 
+	/*bestemme heisens retning*/
 	while(elevator_orders_exist() && stop_elevator == false){
 		
+		/*sjekke om det er ordre over heisen.*/
 		bool orders_above = false;
 		for(int j = current_floor; j < HARDWARE_NUMBER_OF_FLOORS; j++){
 			if(up_orders[j] == 1 || cab_orders[j] == 1 || down_orders[j] == 1){
 				orders_above = true;
 			}
 		}
+		/*hvis orders_above = false, finnes det ordre under heisen*/
 		
-		/*sjekke om ordre over eller under den retningen heisen går i*/
+		/*hvis det finnes ordre i heisen retning skal heisen fortsette i samme retning*/
 		if(direction == up && orders_above == true){
 			current_state = move_up_state;
 			break;
@@ -240,7 +266,7 @@ void controller_at_floor(){
 			break;
 		}
 		
-		/*endre retning*/
+		/*hvis det ikke finnes ordre i heisen retning må heisen endre retning*/
 		else{
 			if(direction == up){
 				current_state = move_down_state;
@@ -253,21 +279,29 @@ void controller_at_floor(){
 		}
 	}
 	
+	/*hvis det ikke finnes ordre skal heisen i waiting_state*/
 	if(!elevator_orders_exist() && stop_elevator == false){
 		current_state = waiting_state;
 	}
 }
 
-
+/*stoppe heisen når stopp-knappen trykkes inn*/
 void controller_stop_button(){
+	/*stoppe heisen*/
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
+	/*så lenge stopp-knappen er trykket inn skal stopp-signalet lyset og døren være åpen*/
 	while(hardware_read_stop_signal()){	
-		hardware_command_stop_light(1);
-		hardware_command_door_open(1);
+		hardware_command_stop_light(1); /*MÅ SJEKKE OM AT FLOOR*/
+		if(elevator_check_if_at_floor()){
+			hardware_command_door_open(1);
+		}
 	}
+	
+	/*knapp sluppet -> stopp-lys av*/
 	hardware_command_stop_light(0);
 
+	/*dør åpen i 3 sekunder*/
 	int start_time = (clock() * 1000)/CLOCKS_PER_SEC;
 	int end_time = start_time + 3000;
 

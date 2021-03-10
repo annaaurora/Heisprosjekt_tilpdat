@@ -29,6 +29,7 @@ bool elevator_check_if_at_floor(void){
 		for(int j = 0; j < HARDWARE_NUMBER_OF_FLOORS; j++){
 			if(hardware_read_floor_sensor(j)){
 				current_floor = j;
+				hardware_command_floor_indicator_on(j);
 				return true;
 			}
 		}
