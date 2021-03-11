@@ -36,9 +36,6 @@ bool elevator_check_if_at_floor(void){
 		return false;
 }
 
-
-
-
 /*oppdaterer de globale variablene up-, cab-, og down_orders*/
 /*skrur på ordre-lys*/
 void elevator_update_orders(void){ 
@@ -92,5 +89,12 @@ int elevator_floor_with_order(){
 	return 0;
 }
 
-
+void elevator_current_floor_delete_orders(){
+	up_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_UP, 0);
+	cab_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_INSIDE, 0);
+	down_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_DOWN, 0);
+}
 

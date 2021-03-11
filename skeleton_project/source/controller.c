@@ -203,12 +203,7 @@ void controller_moving_down(){
 void controller_at_floor(){
 
 	/*nullstille alle ordre og ordre-lys på current_floor*/
-	up_orders[current_floor] = 0;
-	hardware_command_order_light(current_floor, HARDWARE_ORDER_UP, 0);
-	cab_orders[current_floor] = 0;
-	hardware_command_order_light(current_floor, HARDWARE_ORDER_INSIDE, 0);
-	down_orders[current_floor] = 0;
-	hardware_command_order_light(current_floor, HARDWARE_ORDER_DOWN, 0);
+	elevator_current_floor_delete_orders();
 
 	/*stoppe heisen*/
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
@@ -229,6 +224,8 @@ void controller_at_floor(){
 		start_time = (clock() * 1000)/CLOCKS_PER_SEC;
 
 		elevator_update_orders();
+
+		elevator_current_floor_delete_orders();
 
 		if(hardware_read_obstruction_signal()){
 			end_time = start_time + 3000;
@@ -297,7 +294,7 @@ void controller_stop_button(){
 			hardware_command_door_open(1);
 		}
 	}
-	
+
 	/*knapp sluppet -> stopp-lys av*/
 	hardware_command_stop_light(0);
 

@@ -40,6 +40,8 @@ int elevator_floor_with_order();
 
 int elevator_closest_floor_with_order();
 
+void elevator_current_floor_delete_orders();
+
 
 
 
