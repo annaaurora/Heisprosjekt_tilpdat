@@ -81,7 +81,7 @@ bool elevator_orders_in_order_type(int order_type[]){
 
 
 bool elevator_orders_exist(void){
-	return (elevator_check_for_orders(up_orders) || elevator_check_for_orders(cab_orders) || elevator_check_for_orders(down_orders));
+	return (elevator_orders_in_order_type(up_orders) || elevator_orders_in_order_type(cab_orders) || elevator_orders_in_order_type(down_orders));
 }
 
 /*sjekke hvilken etasje som har ordre (brukes bare i waiting, når det kun er max 1 ordre)*/
