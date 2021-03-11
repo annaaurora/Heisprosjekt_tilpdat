@@ -14,11 +14,7 @@ void controller_initialize(void){
 	elevator_clear_all_order_lights();
 
 	/*nullstille ordre-arrays*/
-	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
-		up_orders[i] = 0;
-		cab_orders[i] = 0;
-		down_orders[i] = 0;
-	}
+	elevator_clear_all_orders();
 
 	/*setter retning oppover og stopper i første etasje den møter*/
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
@@ -42,7 +38,7 @@ void controller_initialize(void){
 
 
 /*Bestemme heisens retning*/
-void controller_decide_up_or_down(){
+void controller_decide_up_or_down(void){
 	
 	/*ingen ordre -> sjekke stopp-knapp, vente på ordre*/
 	while(!elevator_orders_exist()){
@@ -83,7 +79,7 @@ void controller_decide_up_or_down(){
 }
 
 /*Retning = oppover. Velge ordre, videre til at_floor_state*/
-void controller_moving_up(){
+void controller_moving_up(void){
 
 	/*setter retning opp og oppdaterer direction*/
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
@@ -142,7 +138,7 @@ void controller_moving_up(){
 }
 
 /*Retning = nedover. Velge ordre, videre til at_floor_state*/
-void controller_moving_down(){
+void controller_moving_down(void){
 
 	/*Sette retning ned opp oppdatere direction*/
 	hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
@@ -200,10 +196,10 @@ void controller_moving_down(){
 }
 
 
-void controller_at_floor(){
+void controller_at_floor(void){
 
 	/*nullstille alle ordre og ordre-lys på current_floor*/
-	elevator_current_floor_delete_orders();
+	elevator_clear_orders_at_current_floor();
 
 	/*stoppe heisen*/
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
@@ -225,7 +221,7 @@ void controller_at_floor(){
 
 		elevator_update_orders();
 
-		elevator_current_floor_delete_orders();
+		elevator_clear_orders_at_current_floor();
 
 		if(hardware_read_obstruction_signal()){
 			end_time = start_time + 3000;
@@ -283,13 +279,13 @@ void controller_at_floor(){
 }
 
 /*stoppe heisen når stopp-knappen trykkes inn*/
-void controller_stop_button(){
+void controller_stop_button(void){
 	/*stoppe heisen*/
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
 	/*så lenge stopp-knappen er trykket inn skal stopp-signalet lyset og døren være åpen*/
 	while(hardware_read_stop_signal()){	
-		hardware_command_stop_light(1); /*MÅ SJEKKE OM AT FLOOR*/
+		hardware_command_stop_light(1); 
 		if(elevator_check_if_at_floor()){
 			hardware_command_door_open(1);
 		}
@@ -303,7 +299,6 @@ void controller_stop_button(){
 	int end_time = start_time + 3000;
 
 	if(elevator_check_if_at_floor()){
-		hardware_command_door_open(1);
 		do{
 			start_time = (clock() * 1000)/CLOCKS_PER_SEC;
 		} while(start_time <= end_time);
@@ -317,18 +312,14 @@ void controller_stop_button(){
 
 	elevator_clear_all_order_lights();
 
-	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
-		up_orders[i] = 0;
-		cab_orders[i] = 0;
-		down_orders[i] = 0;
-	}
+	elevator_clear_all_orders();
 
 	current_state = waiting_state;
 }
 
 
 
-void controller_state_machine(){
+void controller_state_machine(void){
 	while(true){
 
 		switch(current_state){

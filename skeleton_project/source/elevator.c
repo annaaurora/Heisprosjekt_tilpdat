@@ -24,17 +24,26 @@ void elevator_clear_all_order_lights(void){
 }
 
 
-/*sjekke om heisen er i en etasje*/
-bool elevator_check_if_at_floor(void){
-		for(int j = 0; j < HARDWARE_NUMBER_OF_FLOORS; j++){
-			if(hardware_read_floor_sensor(j)){
-				current_floor = j;
-				hardware_command_floor_indicator_on(j);
-				return true;
-			}
-		}
-		return false;
+/*clear alle ordre*/
+void elevator_clear_all_orders(void){
+	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
+		up_orders[i] = 0;
+		cab_orders[i] = 0;
+		down_orders[i] = 0;
+	}
 }
+
+
+/*clear orders bare i current floor*/
+void elevator_clear_orders_at_current_floor(void){
+	up_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_UP, 0);
+	cab_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_INSIDE, 0);
+	down_orders[current_floor] = 0;
+	hardware_command_order_light(current_floor, HARDWARE_ORDER_DOWN, 0);
+}
+
 
 /*oppdaterer de globale variablene up-, cab-, og down_orders*/
 /*skrur på ordre-lys*/
@@ -60,9 +69,7 @@ void elevator_update_orders(void){
 }
 
 
-
-
-bool elevator_check_for_orders(int order_type[]){
+bool elevator_orders_in_order_type(int order_type[]){
 	elevator_update_orders();
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 		if(order_type[i] == 1){
@@ -73,13 +80,11 @@ bool elevator_check_for_orders(int order_type[]){
 }
 
 
-
 bool elevator_orders_exist(void){
 	return (elevator_check_for_orders(up_orders) || elevator_check_for_orders(cab_orders) || elevator_check_for_orders(down_orders));
 }
 
-
-
+/*sjekke hvilken etasje som har ordre (brukes bare i waiting, når det kun er max 1 ordre)*/
 int elevator_floor_with_order(){
 	for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 		if((up_orders[i] == 1) || (cab_orders[i] == 1) || (down_orders[i] == 1)){
@@ -89,12 +94,22 @@ int elevator_floor_with_order(){
 	return 0;
 }
 
-void elevator_current_floor_delete_orders(){
-	up_orders[current_floor] = 0;
-	hardware_command_order_light(current_floor, HARDWARE_ORDER_UP, 0);
-	cab_orders[current_floor] = 0;
-	hardware_command_order_light(current_floor, HARDWARE_ORDER_INSIDE, 0);
-	down_orders[current_floor] = 0;
-	hardware_command_order_light(current_floor, HARDWARE_ORDER_DOWN, 0);
+
+/*sjekke om heisen er i en etasje*/
+bool elevator_check_if_at_floor(void){
+		for(int j = 0; j < HARDWARE_NUMBER_OF_FLOORS; j++){
+			if(hardware_read_floor_sensor(j)){
+				current_floor = j;
+				hardware_command_floor_indicator_on(j);
+				return true;
+			}
+		}
+		return false;
 }
+
+
+
+
+
+
 

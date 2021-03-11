@@ -18,29 +18,27 @@ typedef enum {
 
 elevator_direction direction; 
 
+
 int up_orders[HARDWARE_NUMBER_OF_FLOORS];
 int cab_orders[HARDWARE_NUMBER_OF_FLOORS];
 int down_orders[HARDWARE_NUMBER_OF_FLOORS];
 
 
-
 void elevator_clear_all_order_lights(void);
 
-void elevator_reset_all_orders(void);
+void elevator_clear_all_orders(void);
 
-bool elevator_check_if_at_floor(void);
+void elevator_clear_orders_at_current_floor(void);
 
 void elevator_update_orders(void);
 
-bool elevator_check_for_orders(int order_type[]);
+bool elevator_orders_in_order_type(int order_type[]);
 
 bool elevator_orders_exist(void);
 
-int elevator_floor_with_order();
+int elevator_floor_with_order(void);
 
-int elevator_closest_floor_with_order();
-
-void elevator_current_floor_delete_orders();
+bool elevator_check_if_at_floor(void);
 
 
 
