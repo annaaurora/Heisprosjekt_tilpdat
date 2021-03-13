@@ -121,19 +121,15 @@ void controller_moving_up(void){
 		/*hvis up_or_can_orders_above = false*/
 		/*at_floor_state når heisen kommer til en etg med ordre*/
 		else{
-			for(int n = current_floor; n < HARDWARE_NUMBER_OF_FLOORS; n++){
-				if(hardware_read_floor_sensor(n)){
-					hardware_command_floor_indicator_on(n);
-					current_floor = n;
-					if((down_orders[n] == 1)){
-						current_state = at_floor_state;
-						break;
-					}
+			int top_floor_with_order = elevator_find_top_floor_with_down_order();
+				if(hardware_read_floor_sensor(top_floor_with_order)){
+					hardware_command_floor_indicator_on(top_floor_with_order);
+					current_floor = top_floor_with_order;
+					current_state = at_floor_state;
+					break;
 				}
 			}
 			break;
-		}
-		
 	}
 }
 
@@ -180,18 +176,15 @@ void controller_moving_down(void){
 		/*hvis down_or_can_orders_above = false*/
 		/*at_floor_state når heisen kommer til en etg med ordre*/
 		else{
-			for(int n = current_floor; n >= 0; n--){
-				if(hardware_read_floor_sensor(n)){
-					hardware_command_floor_indicator_on(n);
-					current_floor = n;
-					if((up_orders[n] == 1)){
-						current_state = at_floor_state;
-						break;
-					}
+			int bottom_floor_with_order = elevator_find_bottom_floor_with_up_order();
+				if(hardware_read_floor_sensor(bottom_floor_with_order)){
+					hardware_command_floor_indicator_on(bottom_floor_with_order);
+					current_floor = bottom_floor_with_order;
+					current_state = at_floor_state;
+					break;
 				}
 			}
 			break;
-		}
 	}
 }
 

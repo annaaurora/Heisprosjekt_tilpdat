@@ -40,6 +40,9 @@ int elevator_floor_with_order(void);
 
 bool elevator_check_if_at_floor(void);
 
+int elevator_find_top_floor_with_down_order(void);
+
+int elevator_find_bottom_floor_with_up_order(void);
 
 
 

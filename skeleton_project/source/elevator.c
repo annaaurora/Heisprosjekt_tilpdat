@@ -108,8 +108,25 @@ bool elevator_check_if_at_floor(void){
 }
 
 
+int elevator_find_top_floor_with_down_order(void){
+	int top_floor_with_order;
+	for(int i = current_floor; i < HARDWARE_NUMBER_OF_FLOORS; i++){
+		if(down_orders[i] == 1){
+			top_floor_with_order = i;
+		}
+	}
+	return top_floor_with_order;
+}
 
-
+int elevator_find_bottom_floor_with_up_order(void){
+	int bottom_floor_with_order;
+	for(int i = current_floor; i >= 0; i--){
+		if(up_orders[i] == 1){
+			bottom_floor_with_order = i;
+		}
+	}
+	return bottom_floor_with_order;
+}
 
 
 
