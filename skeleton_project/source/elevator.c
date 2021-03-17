@@ -1,12 +1,6 @@
 /**
  * @file elevator.c
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2021-03-17
- * 
- * @copyright Copyright (c) 2021
- * 
+ * @brief Implementation file for elevator functions
  */
 
 #include <stdio.h>
@@ -18,7 +12,6 @@
 #include "time.h"
 
 
-/*clear alle ordre-lys*/
 void elevator_clear_all_order_lights(void){
     HardwareOrder order_types[3] = {
         HARDWARE_ORDER_UP,
@@ -35,7 +28,6 @@ void elevator_clear_all_order_lights(void){
 }
 
 
-/*sjekke om heisen er i en etasje*/
 bool elevator_check_if_at_floor(void){
 		for(int j = 0; j < HARDWARE_NUMBER_OF_FLOORS; j++){
 			if(hardware_read_floor_sensor(j)){

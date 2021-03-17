@@ -1,16 +1,11 @@
+/**
+ * @file queue.h
+ * @brief Order functions.
+ */
+
 #ifndef QUEUE_H
 #define QUEUE_H
 
-/**
- * @file queue.h
- * @author your name (you@domain.com)
- * @brief Order functions.
- * @version 0.1
- * @date 2021-03-17
- * 
- * @copyright Copyright (c) 2021
- * 
- */
 
 #include <stdio.h>
 #include <stdlib.h>

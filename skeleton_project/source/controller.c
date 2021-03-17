@@ -1,3 +1,8 @@
+/**
+ * @file 
+ * @brief Implementation file for state machine and state machine functions.
+ */
+
 #include "elevator.h"
 #include "queue.h"
 #include "controller.h"

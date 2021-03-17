@@ -1,16 +1,12 @@
+/**
+ * @file 
+ * @brief Elevator functions
+ */
+
+
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
 
-/**
- * @file elevator.h
- * @author your name (you@domain.com)
- * @brief Elevator functions.
- * @version 0.1
- * @date 2021-03-17
- * 
- * @copyright Copyright (c) 2021
- * 
- */
 
 #include <stdio.h>
 #include <stdlib.h>

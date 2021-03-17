@@ -1,16 +1,15 @@
+/**
+ * @file main.c
+ * @brief main file, sets current state to init state to initialize elevator at the beginning.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include "hardware.h"
 #include "elevator.h"
 #include "controller.h"
-
-/**
- * @brief 
- * 
- * @return int 
- */
-
+#include "queue.h"
 
 
 int main(){

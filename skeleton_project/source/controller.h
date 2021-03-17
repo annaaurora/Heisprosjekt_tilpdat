@@ -1,17 +1,11 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
-
 /**
- * @file controller.h
- * @author your name (you@domain.com)
+ * @file 
  * @brief State functions and state machine.
- * @version 0.1
- * @date 2021-03-17
- * 
- * @copyright Copyright (c) 2021
- * 
  */
 
+
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include "elevator.h"
 #include "queue.h"
