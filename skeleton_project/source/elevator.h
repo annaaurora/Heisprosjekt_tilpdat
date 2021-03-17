@@ -1,6 +1,17 @@
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
 
+/**
+ * @file elevator.h
+ * @author your name (you@domain.com)
+ * @brief Elevator functions.
+ * @version 0.1
+ * @date 2021-03-17
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -8,42 +19,39 @@
 #include "hardware.h"
 #include "time.h"
 
+/**
+ * @brief global variable storing current floor.
+ * 
+ */
 int current_floor;
 
+/**
+ * @brief typedef enum defining possible directions and creating type elevator_direction.
+ * 
+ */
 typedef enum {
 	up,
 	down
 } elevator_direction;
 
-
+/**
+ * @brief global variable storing direction.
+ * 
+ */
 elevator_direction direction; 
 
-
-int up_orders[HARDWARE_NUMBER_OF_FLOORS];
-int cab_orders[HARDWARE_NUMBER_OF_FLOORS];
-int down_orders[HARDWARE_NUMBER_OF_FLOORS];
-
-
+/**
+ * @brief clearing all order ligths.
+ * 
+ */
 void elevator_clear_all_order_lights(void);
 
-void elevator_clear_all_orders(void);
-
-void elevator_clear_orders_at_current_floor(void);
-
-void elevator_update_orders(void);
-
-bool elevator_orders_in_order_type(int order_type[]);
-
-bool elevator_orders_exist(void);
-
-int elevator_floor_with_order(void);
-
+/**
+ * @brief returns true if elevator is on a floor.
+ * 
+ * @return true 
+ * @return false 
+ */
 bool elevator_check_if_at_floor(void);
-
-int elevator_find_top_floor_with_down_order(void);
-
-int elevator_find_bottom_floor_with_up_order(void);
-
-
 
 #endif
