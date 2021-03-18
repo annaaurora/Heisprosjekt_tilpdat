@@ -1,0 +1,48 @@
+\hypertarget{queue_8c}{}\doxysection{source/queue.c File Reference}
+\label{queue_8c}\index{source/queue.c@{source/queue.c}}
+
+
+Implementation file for order functions.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}elevator.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}hardware.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time.\+h\char`\"{}}\newline
+Include dependency graph for queue.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{queue_8c_a2b3b45931291acb07f1812c3924d33c7}\label{queue_8c_a2b3b45931291acb07f1812c3924d33c7}} 
+void {\bfseries queue\+\_\+elevator\+\_\+clear\+\_\+all\+\_\+orders} (void)
+\item 
+\mbox{\Hypertarget{queue_8c_ad9728147fc8207f81a94691ca8fe95cf}\label{queue_8c_ad9728147fc8207f81a94691ca8fe95cf}} 
+void {\bfseries queue\+\_\+elevator\+\_\+clear\+\_\+orders\+\_\+at\+\_\+current\+\_\+floor} (void)
+\item 
+\mbox{\Hypertarget{queue_8c_a16c57781815f72d72f78d34728f7749f}\label{queue_8c_a16c57781815f72d72f78d34728f7749f}} 
+void {\bfseries queue\+\_\+elevator\+\_\+update\+\_\+orders} (void)
+\item 
+\mbox{\Hypertarget{queue_8c_ad17fbe03aefdd9ee23e8afeb7fd3bcf9}\label{queue_8c_ad17fbe03aefdd9ee23e8afeb7fd3bcf9}} 
+bool {\bfseries queue\+\_\+elevator\+\_\+orders\+\_\+in\+\_\+order\+\_\+type} (int order\+\_\+type\mbox{[}$\,$\mbox{]})
+\item 
+\mbox{\Hypertarget{queue_8c_ab294fed1fbe84dc8473ca58fcf1725c6}\label{queue_8c_ab294fed1fbe84dc8473ca58fcf1725c6}} 
+bool {\bfseries queue\+\_\+elevator\+\_\+orders\+\_\+exist} (void)
+\item 
+\mbox{\Hypertarget{queue_8c_af49963d7be700bf0dc8d377e8f646cc4}\label{queue_8c_af49963d7be700bf0dc8d377e8f646cc4}} 
+int {\bfseries queue\+\_\+elevator\+\_\+floor\+\_\+with\+\_\+order} ()
+\item 
+\mbox{\Hypertarget{queue_8c_aa515f9074d8e24b87323000e2d02cd07}\label{queue_8c_aa515f9074d8e24b87323000e2d02cd07}} 
+int {\bfseries queue\+\_\+elevator\+\_\+find\+\_\+top\+\_\+floor\+\_\+with\+\_\+down\+\_\+order} (void)
+\item 
+\mbox{\Hypertarget{queue_8c_aff6199554ef9b126d33feacec63f82cb}\label{queue_8c_aff6199554ef9b126d33feacec63f82cb}} 
+int {\bfseries queue\+\_\+elevator\+\_\+find\+\_\+bottom\+\_\+floor\+\_\+with\+\_\+up\+\_\+order} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation file for order functions. 
+
