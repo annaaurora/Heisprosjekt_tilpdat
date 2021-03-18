@@ -36,6 +36,13 @@ typedef enum {
  */
 elevator_direction direction; 
 
+
+/**
+ * @brief true if the elevator is between floors/not at a floor.
+ * 
+ */
+bool between_floors;
+
 /**
  * @brief clearing all order ligths.
  * 
@@ -43,10 +50,10 @@ elevator_direction direction;
 void elevator_clear_all_order_lights(void);
 
 /**
- * @brief returns true if elevator is on a floor.
+ * @brief checks true if elevator is on a floor.
  * 
- * @return true 
- * @return false 
+ * @return true if elevator is on a floor.
+ * @return false if elevator is not on a floor.
  */
 bool elevator_check_if_at_floor(void);
 

@@ -11,12 +11,6 @@
 #include "queue.h"
 
 /**
- * @brief returns true if the elevator is between floors/not at a floor.
- * 
- */
-bool between_floors;
-
-/**
  * @brief typedef enum defining the possible states and creating type State.
  * 
  */

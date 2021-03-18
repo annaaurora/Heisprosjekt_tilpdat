@@ -45,37 +45,37 @@ void queue_update_orders(void);
  * @brief returns true if there are any orders of param order_type.
  * 
  * @param order_type 
- * @return true 
- * @return false 
+ * @return true if orders in order type.
+ * @return false if no orders in order type.
  */
 bool queue_orders_in_order_type(int order_type[]);
 
 /**
- * @brief returns true if there are any existing orders.
+ * @brief checks if there are any existing orders.
  * 
- * @return true 
- * @return false 
+ * @return true if there are any existing orders.
+ * @return false if there are no existing orders.
  */
 bool queue_orders_exist(void);
 
 /**
- * @brief returns which floor has order. Only used when there is only one order.
+ * @brief checks which floor has order. Only used when there is only one order.
  * 
- * @return int 
+ * @return the floor with order as an int.
  */
 int queue_floor_with_order(void);
 
 /**
- * @brief returns the top floor that has a down order.
+ * @brief finds the top floor that has a down order.
  * 
- * @return int 
+ * @return the top floor with down order as an int. 
  */
 int queue_find_top_floor_with_down_order(void);
 
 /**
- * @brief returns the bottom floor that has an up order.
+ * @brief find the bottom floor that has an up order.
  * 
- * @return int 
+ * @return the bottom floor with up order as an int.
  */
 int queue_find_bottom_floor_with_up_order(void);
 

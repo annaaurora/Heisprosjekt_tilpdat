@@ -18,7 +18,7 @@ void controller_initialize(void){
 
 	elevator_clear_all_order_lights();
 
-	elevator_clear_all_orders();
+	queue_clear_all_orders();
 
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	direction = up;
@@ -40,15 +40,15 @@ void controller_initialize(void){
 
 void controller_decide_up_or_down(void){
 	
-	while(!elevator_orders_exist()){
+	while(!queue_orders_exist()){
 		if(hardware_read_stop_signal()){
 			current_state = stop_state;
 			break;
 		}
 	}
 	
-	if(elevator_orders_exist()){
-		int next_floor = elevator_floor_with_order();
+	if(queue_orders_exist()){
+		int next_floor = queue_floor_with_order();
 
 		if((next_floor - current_floor) > 0){
 			current_state = move_up_state;
@@ -87,7 +87,7 @@ void controller_moving_up(void){
 		}
 	}
 	
-	while(elevator_orders_exist()){
+	while(queue_orders_exist()){
 
 		if(hardware_read_stop_signal()){
 			current_state = stop_state;
@@ -110,7 +110,7 @@ void controller_moving_up(void){
 
 
 		else{
-			int top_floor_with_order = elevator_find_top_floor_with_down_order();
+			int top_floor_with_order = queue_find_top_floor_with_down_order();
 				for(int i = current_floor; i < HARDWARE_NUMBER_OF_FLOORS; i++){
 					if(hardware_read_floor_sensor(i)){
 						hardware_command_floor_indicator_on(i);
@@ -141,7 +141,7 @@ void controller_moving_down(void){
 		}
 	}
 
-	while(elevator_orders_exist()){
+	while(queue_orders_exist()){
 
 		if(hardware_read_stop_signal()){
 			current_state = stop_state;
@@ -163,7 +163,7 @@ void controller_moving_down(void){
 		}
 
 		else{
-			int bottom_floor_with_order = elevator_find_bottom_floor_with_up_order();
+			int bottom_floor_with_order = queue_find_bottom_floor_with_up_order();
 				for(int i = current_floor; i >= 0; i--){
 					if(hardware_read_floor_sensor(i)){
 						hardware_command_floor_indicator_on(i);
@@ -184,7 +184,7 @@ void controller_moving_down(void){
 
 void controller_at_floor(void){
 
-	elevator_clear_orders_at_current_floor();
+	queue_clear_orders_at_current_floor();
 
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
@@ -198,9 +198,9 @@ void controller_at_floor(void){
 	do {
 		start_time = (clock() * 1000)/CLOCKS_PER_SEC;
 
-		elevator_update_orders();
+		queue_update_orders();
 
-		elevator_clear_orders_at_current_floor();
+		queue_clear_orders_at_current_floor();
 
 		if(hardware_read_obstruction_signal()){
 			end_time = start_time + 3000;
@@ -214,7 +214,7 @@ void controller_at_floor(void){
 
 	hardware_command_door_open(0);
 
-	while(elevator_orders_exist() && stop_elevator == false){
+	while(queue_orders_exist() && stop_elevator == false){
 		
 		bool orders_above = false;
 		for(int j = current_floor; j < HARDWARE_NUMBER_OF_FLOORS; j++){
@@ -245,7 +245,7 @@ void controller_at_floor(void){
 		}
 	}
 	
-	if(!elevator_orders_exist() && stop_elevator == false){
+	if(!queue_orders_exist() && stop_elevator == false){
 		current_state = waiting_state;
 	}
 }
@@ -253,13 +253,13 @@ void controller_at_floor(void){
 
 void controller_stop_button(void){
 	
-	elevator_clear_all_orders();
-	elevator_clear_all_order_lights();
+	queue_clear_all_orders();
+	queue_clear_all_order_lights();
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
 	while(hardware_read_stop_signal()){	
 		hardware_command_stop_light(1); 
-		if(elevator_check_if_at_floor()){
+		if(queue_check_if_at_floor()){
 			hardware_command_door_open(1);
 		}
 	}
