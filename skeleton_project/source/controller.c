@@ -77,6 +77,13 @@ void controller_decide_up_or_down(void){
 
 void controller_moving_up(void){
 
+	bool any_orders_above = false;
+	for(int j = current_floor; j < HARDWARE_NUMBER_OF_FLOORS; j++){
+		if(up_orders[j] == 1 || cab_orders[j] == 1 || down_orders[j] == 1){
+			any_orders_above = true;
+		}
+	}
+
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	direction = up;
 
@@ -88,6 +95,10 @@ void controller_moving_up(void){
 	}
 	
 	while(queue_orders_exist()){
+		if(any_orders_above == false){
+			current_state = waiting_state;
+			break;
+		}
 
 		if(hardware_read_stop_signal()){
 			current_state = stop_state;
@@ -131,6 +142,13 @@ void controller_moving_up(void){
 
 void controller_moving_down(void){
 
+	bool any_orders_below = false;
+	for(int j = 0; j <= current_floor; j++){
+		if(up_orders[j] == 1 || cab_orders[j] == 1 || down_orders[j] == 1){
+			any_orders_below = true;
+		}
+	}
+
 	hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 	direction = down;
 
@@ -142,6 +160,10 @@ void controller_moving_down(void){
 	}
 
 	while(queue_orders_exist()){
+		if(any_orders_below == false){
+			current_state = waiting_state;
+			break;
+		}
 
 		if(hardware_read_stop_signal()){
 			current_state = stop_state;
