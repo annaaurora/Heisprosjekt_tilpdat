@@ -1,9 +1,0 @@
-<map id="source/elevator.h" name="source/elevator.h">
-<area shape="rect" id="node1" title="Elevator functions." alt="" coords="211,5,346,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,72,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="97,80,167,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="191,80,265,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="289,80,372,107"/>
-<area shape="rect" id="node6" href="$hardware_8h.html" title="Driver for the elevator hardware." alt="" coords="397,80,491,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="516,80,580,107"/>
-</map>

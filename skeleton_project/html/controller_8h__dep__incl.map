@@ -1,5 +1,0 @@
-<map id="source/controller.h" name="source/controller.h">
-<area shape="rect" id="node1" title="State functions and state machine." alt="" coords="81,5,223,32"/>
-<area shape="rect" id="node2" href="$controller_8c.html" title="Implementation file for state machine and state machine functions." alt="" coords="5,80,147,107"/>
-<area shape="rect" id="node3" href="$main_8c.html" title="main file, sets current state to init state to initialize elevator at the beginning." alt="" coords="171,80,285,107"/>
-</map>

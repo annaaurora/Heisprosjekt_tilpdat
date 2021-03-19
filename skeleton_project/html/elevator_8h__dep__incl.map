@@ -1,9 +1,0 @@
-<map id="source/elevator.h" name="source/elevator.h">
-<area shape="rect" id="node1" title="Elevator functions." alt="" coords="187,5,322,32"/>
-<area shape="rect" id="node2" href="$controller_8c.html" title="Implementation file for state machine and state machine functions." alt="" coords="22,229,164,256"/>
-<area shape="rect" id="node3" href="$queue_8h.html" title="Order functions." alt="" coords="143,80,264,107"/>
-<area shape="rect" id="node4" href="$controller_8h.html" title="State functions and state machine." alt="" coords="22,155,164,181"/>
-<area shape="rect" id="node5" href="$main_8c.html" title="main file, sets current state to init state to initialize elevator at the beginning." alt="" coords="196,229,310,256"/>
-<area shape="rect" id="node6" href="$elevator_8c.html" title="Implementation file for elevator functions." alt="" coords="341,80,474,107"/>
-<area shape="rect" id="node7" href="$queue_8c.html" title="Implementation file for order functions." alt="" coords="498,80,618,107"/>
-</map>

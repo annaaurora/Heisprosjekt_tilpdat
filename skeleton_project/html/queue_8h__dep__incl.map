@@ -1,6 +1,0 @@
-<map id="source/queue.h" name="source/queue.h">
-<area shape="rect" id="node1" title="Order functions." alt="" coords="91,5,213,32"/>
-<area shape="rect" id="node2" href="$controller_8c.html" title="Implementation file for state machine and state machine functions." alt="" coords="5,155,147,181"/>
-<area shape="rect" id="node3" href="$controller_8h.html" title="State functions and state machine." alt="" coords="81,80,223,107"/>
-<area shape="rect" id="node4" href="$main_8c.html" title="main file, sets current state to init state to initialize elevator at the beginning." alt="" coords="187,155,301,181"/>
-</map>
