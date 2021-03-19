@@ -276,12 +276,12 @@ void controller_at_floor(void){
 void controller_stop_button(void){
 	
 	queue_clear_all_orders();
-	queue_clear_all_order_lights();
+	elevator_clear_all_order_lights();
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 
 	while(hardware_read_stop_signal()){	
 		hardware_command_stop_light(1); 
-		if(queue_check_if_at_floor()){
+		if(elevator_check_if_at_floor()){
 			hardware_command_door_open(1);
 		}
 	}
