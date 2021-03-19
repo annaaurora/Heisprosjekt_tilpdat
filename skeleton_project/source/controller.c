@@ -1,5 +1,5 @@
 /**
- * @file 
+ * @file controller.c
  * @brief Implementation file for state machine and state machine functions.
  */
 

@@ -8,4 +8,107 @@ Implementation file for state machine and state machine functions.
 {\ttfamily \#include \char`\"{}elevator.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}queue.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}controller.\+h\char`\"{}}\newline
-Include dependency graph for controller.\+c\+:
+Include dependency graph for controller.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{controller_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{controller_8c_a6a341d783c32efcdd6a35b661bb9e893}\label{controller_8c_a6a341d783c32efcdd6a35b661bb9e893}} 
+void {\bfseries controller\+\_\+initialize} (void)
+\item 
+\mbox{\Hypertarget{controller_8c_a4a9cc7265635ee6e4821ab713f75ebfb}\label{controller_8c_a4a9cc7265635ee6e4821ab713f75ebfb}} 
+void {\bfseries controller\+\_\+decide\+\_\+up\+\_\+or\+\_\+down} (void)
+\item 
+void \mbox{\hyperlink{controller_8c_a5c8da7439afab344a09bbd6515da30ad}{controller\+\_\+moving\+\_\+up}} (void)
+\begin{DoxyCompactList}\small\item\em Moves up until the elevator reaches a floor with an order. Up and cab orders are prioritized over down order, and if there are multiple down orders, the elevator goes to the top down order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{controller_8c_a429922ffec7e04b081565e68bbd1f9a8}{controller\+\_\+moving\+\_\+down}} (void)
+\begin{DoxyCompactList}\small\item\em Moves down until the elevator reaches a floor with an order. Down and cab orders are prioritized over up order, and if there are multiple up orders, the elevator goes to the bottom up order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{controller_8c_a23b17444fbe5deb1d123630994973e80}{controller\+\_\+at\+\_\+floor}} (void)
+\begin{DoxyCompactList}\small\item\em Function used in at floor state. Opens doors for three seconds while checking stop button and obstruction. Then decides between up-\/, down-\/ og waiting state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{controller_8c_a2f56abfba53c68d9fd93670f64e341b7}{controller\+\_\+stop\+\_\+button}} (void)
+\begin{DoxyCompactList}\small\item\em Function used in stop state. Stops elevator and opens door for three seconds if elevator is on a floor. Deletes orders and clears order lights. Changes current state to waiting state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{controller_8c_a5555bffe59fb0080d93e30aa3dc8033f}{controller\+\_\+state\+\_\+machine}} (void)
+\begin{DoxyCompactList}\small\item\em Switches between elevator states. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation file for state machine and state machine functions. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{controller_8c_a23b17444fbe5deb1d123630994973e80}\label{controller_8c_a23b17444fbe5deb1d123630994973e80}} 
+\index{controller.c@{controller.c}!controller\_at\_floor@{controller\_at\_floor}}
+\index{controller\_at\_floor@{controller\_at\_floor}!controller.c@{controller.c}}
+\doxysubsubsection{\texorpdfstring{controller\_at\_floor()}{controller\_at\_floor()}}
+{\footnotesize\ttfamily void controller\+\_\+at\+\_\+floor (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Function used in at floor state. Opens doors for three seconds while checking stop button and obstruction. Then decides between up-\/, down-\/ og waiting state. 
+
+
+
+Definition at line 207 of file controller.\+c.
+
+\mbox{\Hypertarget{controller_8c_a429922ffec7e04b081565e68bbd1f9a8}\label{controller_8c_a429922ffec7e04b081565e68bbd1f9a8}} 
+\index{controller.c@{controller.c}!controller\_moving\_down@{controller\_moving\_down}}
+\index{controller\_moving\_down@{controller\_moving\_down}!controller.c@{controller.c}}
+\doxysubsubsection{\texorpdfstring{controller\_moving\_down()}{controller\_moving\_down()}}
+{\footnotesize\ttfamily void controller\+\_\+moving\+\_\+down (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Moves down until the elevator reaches a floor with an order. Down and cab orders are prioritized over up order, and if there are multiple up orders, the elevator goes to the bottom up order. 
+
+
+
+Definition at line 143 of file controller.\+c.
+
+\mbox{\Hypertarget{controller_8c_a5c8da7439afab344a09bbd6515da30ad}\label{controller_8c_a5c8da7439afab344a09bbd6515da30ad}} 
+\index{controller.c@{controller.c}!controller\_moving\_up@{controller\_moving\_up}}
+\index{controller\_moving\_up@{controller\_moving\_up}!controller.c@{controller.c}}
+\doxysubsubsection{\texorpdfstring{controller\_moving\_up()}{controller\_moving\_up()}}
+{\footnotesize\ttfamily void controller\+\_\+moving\+\_\+up (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Moves up until the elevator reaches a floor with an order. Up and cab orders are prioritized over down order, and if there are multiple down orders, the elevator goes to the top down order. 
+
+
+
+Definition at line 78 of file controller.\+c.
+
+\mbox{\Hypertarget{controller_8c_a5555bffe59fb0080d93e30aa3dc8033f}\label{controller_8c_a5555bffe59fb0080d93e30aa3dc8033f}} 
+\index{controller.c@{controller.c}!controller\_state\_machine@{controller\_state\_machine}}
+\index{controller\_state\_machine@{controller\_state\_machine}!controller.c@{controller.c}}
+\doxysubsubsection{\texorpdfstring{controller\_state\_machine()}{controller\_state\_machine()}}
+{\footnotesize\ttfamily void controller\+\_\+state\+\_\+machine (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Switches between elevator states. 
+
+
+
+Definition at line 313 of file controller.\+c.
+
+\mbox{\Hypertarget{controller_8c_a2f56abfba53c68d9fd93670f64e341b7}\label{controller_8c_a2f56abfba53c68d9fd93670f64e341b7}} 
+\index{controller.c@{controller.c}!controller\_stop\_button@{controller\_stop\_button}}
+\index{controller\_stop\_button@{controller\_stop\_button}!controller.c@{controller.c}}
+\doxysubsubsection{\texorpdfstring{controller\_stop\_button()}{controller\_stop\_button()}}
+{\footnotesize\ttfamily void controller\+\_\+stop\+\_\+button (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Function used in stop state. Stops elevator and opens door for three seconds if elevator is on a floor. Deletes orders and clears order lights. Changes current state to waiting state. 
+
+
+
+Definition at line 276 of file controller.\+c.
+

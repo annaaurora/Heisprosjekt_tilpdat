@@ -1,0 +1,10 @@
+<map id="source/hardware.h" name="source/hardware.h">
+<area shape="rect" id="node1" title="Driver for the elevator hardware." alt="" coords="373,5,515,32"/>
+<area shape="rect" id="node2" href="$elevator_8h.html" title="Elevator functions." alt="" coords="271,80,406,107"/>
+<area shape="rect" id="node4" href="$queue_8h.html" title="Order functions." alt="" coords="130,155,251,181"/>
+<area shape="rect" id="node6" href="$main_8c.html" title="main file, sets current state to init state to initialize elevator at the beginning." alt="" coords="263,304,377,331"/>
+<area shape="rect" id="node7" href="$elevator_8c.html" title="Implementation file for elevator functions." alt="" coords="377,155,511,181"/>
+<area shape="rect" id="node8" href="$queue_8c.html" title="Implementation file for order functions." alt="" coords="535,155,655,181"/>
+<area shape="rect" id="node3" href="$controller_8c.html" title="Implementation file for state machine and state machine functions." alt="" coords="5,304,147,331"/>
+<area shape="rect" id="node5" href="$controller_8h.html" title="State functions and state machine." alt="" coords="114,229,257,256"/>
+</map>

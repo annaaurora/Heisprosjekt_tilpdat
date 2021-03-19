@@ -1,5 +1,5 @@
 /**
- * @file 
+ * @file controller.h
  * @brief State functions and state machine.
  */
 

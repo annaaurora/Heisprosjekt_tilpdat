@@ -80,7 +80,16 @@ $(function() {
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="hardware_8h__dep__incl.png" border="0" usemap="#source_2hardware_8hdep" alt=""/></div>
-<!-- MAP 0 -->
+<map name="source_2hardware_8hdep" id="source_2hardware_8hdep">
+<area shape="rect" title="Driver for the elevator hardware." alt="" coords="373,5,515,32"/>
+<area shape="rect" href="elevator_8h.html" title="Elevator functions." alt="" coords="271,80,406,107"/>
+<area shape="rect" href="queue_8h.html" title="Order functions." alt="" coords="130,155,251,181"/>
+<area shape="rect" href="main_8c.html" title="main file, sets current state to init state to initialize elevator at the beginning." alt="" coords="263,304,377,331"/>
+<area shape="rect" href="elevator_8c.html" title="Implementation file for elevator functions." alt="" coords="377,155,511,181"/>
+<area shape="rect" href="queue_8c.html" title="Implementation file for order functions." alt="" coords="535,155,655,181"/>
+<area shape="rect" href="controller_8c.html" title="Implementation file for state machine and state machine functions." alt="" coords="5,304,147,331"/>
+<area shape="rect" href="controller_8h.html" title="State functions and state machine." alt="" coords="114,229,257,256"/>
+</map>
 </div>
 </div>
 <p><a href="hardware_8h_source.html">Go to the source code of this file.</a></p>
@@ -171,8 +180,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00139">139</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
-
 </div>
 </div>
 <a id="a407a6ec035ba357de6aa0fbe55501d1e"></a>
@@ -200,8 +207,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Owing to peculiarities in the hardware construction, there will always be one indicator active. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00148">148</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
-
 </div>
 </div>
 <a id="a01de081ef0510a111053c18cd31afa27"></a>
@@ -227,8 +232,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00070">70</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
 
 </div>
 </div>
@@ -274,8 +277,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00173">173</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
-
 </div>
 </div>
 <a id="aa75b3ac17f72b25946414f48d0063a10"></a>
@@ -302,8 +303,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00164">164</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
-
 </div>
 </div>
 <a id="a054b8fb8768311d46be58d6a4890d771"></a>
@@ -323,8 +322,6 @@ Functions</h2></td></tr>
 
 <p>Initializes the elevator control hardware. Must be called once before other calls to the elevator hardware driver. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. Non-zero for failure. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00046">46</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
 
 </div>
 </div>
@@ -353,8 +350,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if the elevator is at <code>floor</code>, otherwise 0; </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00096">96</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
-
 </div>
 </div>
 <a id="a459fe57a3ee4bc2a28e8a15b2ab14c2d"></a>
@@ -374,8 +369,6 @@ Functions</h2></td></tr>
 
 <p>Polls the hardware for the current obstruction signal. </p>
 <dl class="section return"><dt>Returns</dt><dd>1 if the obstruction signal is high; 0 if it is low. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00092">92</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
 
 </div>
 </div>
@@ -415,8 +408,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if the combination of <code>floor</code> and <code>order_type</code> is being requested, otherwise 0. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00122">122</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
-
 </div>
 </div>
 <a id="a4a77b27c86675c00b513db3445966804"></a>
@@ -436,8 +427,6 @@ Functions</h2></td></tr>
 
 <p>Polls the hardware for the current stop signal. </p>
 <dl class="section return"><dt>Returns</dt><dd>1 if the stop signal is high; 0 if it is low. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="hardware__sal_8c_source.html#l00088">88</a> of file <a class="el" href="hardware__sal_8c_source.html">hardware_sal.c</a>.</p>
 
 </div>
 </div>
